@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, MapPin, Facebook, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Facebook, MessageCircle, Mail } from "lucide-react";
 import { useLocaleStore } from "@/store";
 import { t } from "@/lib/i18n";
 import { CONTACT } from "@/lib/utils";
@@ -37,7 +37,7 @@ export function Footer() {
     <footer className="bg-gray-950 text-gray-300">
       {/* Contact CTA */}
       <div className="border-b border-gray-800">
-        <div className="container mx-auto grid gap-4 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container mx-auto grid gap-4 px-4 py-8 sm:grid-cols-2 lg:grid-cols-5">
           <ContactButton
             href={`tel:${CONTACT.phone}`}
             icon={<Phone className="h-5 w-5" />}
@@ -50,6 +50,12 @@ export function Footer() {
             label={t(locale, "whatsapp")}
             value="WhatsApp"
             external
+          />
+          <ContactButton
+            href={`mailto:${CONTACT.email}`}
+            icon={<Mail className="h-5 w-5" />}
+            label={locale === "ar" ? "البريد الإلكتروني" : "Email"}
+            value={CONTACT.email}
           />
           <ContactButton
             href={CONTACT.maps}
@@ -140,7 +146,7 @@ export function Footer() {
             © {new Date().getFullYear()} CLICK PHONE. {t(locale, "allRightsReserved")}
           </p>
           <p className="text-xs text-gray-500">
-            {locale === "ar" ? "صُنع بـ ❤️ في العراق" : "Made with ❤️ in Iraq"}
+            {locale === "ar" ? "صُنع بـ ❤️ في إربد، الأردن" : "Made with ❤️ in Irbid, Jordan"}
           </p>
         </div>
       </div>

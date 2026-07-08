@@ -80,7 +80,8 @@ npm run dev
 ## معلومات التواصل
 
 - **الهاتف:** 0785954444
-- **واتساب:** +964 785 954 444
+- **واتساب:** +962 785 954 444
+- **البريد الإلكتروني:** click@aloush.online
 - **فيسبوك:** [صفحة فيسبوك](https://web.facebook.com/profile.php?id=61567285796866)
 - **الموقع:** [Google Maps](https://maps.app.goo.gl/7W7ncszchVNWCJhE7)
 

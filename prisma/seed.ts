@@ -426,9 +426,10 @@ async function main() {
   const settings = [
     { key: "site_name", value: "CLICK PHONE", group: "general" },
     { key: "site_name_ar", value: "كليك فون", group: "general" },
-    { key: "site_description", value: "Your #1 destination for smartphones in Iraq", group: "seo" },
+    { key: "site_description", value: "Your #1 destination for smartphones in Irbid, Jordan", group: "seo" },
     { key: "phone", value: "0785954444", group: "contact" },
-    { key: "whatsapp", value: "964785954444", group: "contact" },
+    { key: "whatsapp", value: "962785954444", group: "contact" },
+    { key: "email", value: "click@aloush.online", group: "contact" },
     { key: "facebook", value: "https://web.facebook.com/profile.php?id=61567285796866", group: "social" },
     { key: "maps_url", value: "https://maps.app.goo.gl/7W7ncszchVNWCJhE7", group: "contact" },
     { key: "tax_rate", value: "0.05", group: "commerce" },

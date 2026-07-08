@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | CLICK PHONE",
   },
   description:
-    "متجر كليك فون - وجهتك الأولى لشراء الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية والإكسسوارات في العراق. أفضل الأسعار وضمان أصلي.",
+    "متجر كليك فون - وجهتك الأولى لشراء الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية والإكسسوارات في إربد، الأردن. أفضل الأسعار وضمان أصلي.",
   keywords: [
     "كليك فون",
     "CLICK PHONE",
@@ -30,7 +30,8 @@ export const metadata: Metadata = {
     "ايفون",
     "سامسونج",
     "شاومي",
-    "العراق",
+    "إربد",
+    "الأردن",
     "بيع هواتف",
     "إكسسوارات",
     "صيانة هواتف",
@@ -38,11 +39,11 @@ export const metadata: Metadata = {
   authors: [{ name: "CLICK PHONE" }],
   openGraph: {
     type: "website",
-    locale: "ar_IQ",
+    locale: "ar_JO",
     alternateLocale: "en_US",
     siteName: "CLICK PHONE",
     title: "CLICK PHONE | كليك فون",
-    description: "وجهتك الأولى للهواتف الذكية والإلكترونيات في العراق",
+    description: "وجهتك الأولى للهواتف الذكية والإلكترونيات في إربد، الأردن",
   },
   robots: {
     index: true,

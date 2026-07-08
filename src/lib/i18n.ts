@@ -86,7 +86,7 @@ export const translations = {
     shopNow: "تسوق الآن",
 
     // Footer
-    footerDesc: "متجر كليك فون - وجهتك الموثوقة لشراء الهواتف الذكية والإلكترونيات في العراق",
+    footerDesc: "متجر كليك فون - وجهتك الموثوقة لشراء الهواتف الذكية والإلكترونيات في إربد، الأردن",
     quickLinks: "روابط سريعة",
     customerService: "خدمة العملاء",
     allRightsReserved: "جميع الحقوق محفوظة",
@@ -165,7 +165,7 @@ export const translations = {
     heroDescription: "Discover the latest smartphones, tablets, smartwatches and accessories at the best prices",
     shopNow: "Shop Now",
 
-    footerDesc: "CLICK PHONE - Your trusted destination for smartphones and electronics in Iraq",
+    footerDesc: "CLICK PHONE - Your trusted destination for smartphones and electronics in Irbid, Jordan",
     quickLinks: "Quick Links",
     customerService: "Customer Service",
     allRightsReserved: "All Rights Reserved",

@@ -24,6 +24,7 @@ const content = {
       <h3>تواصل معنا</h3>
       <p>هاتف: <a href="tel:${CONTACT.phone}">${CONTACT.phone}</a></p>
       <p>واتساب: <a href="https://wa.me/${CONTACT.whatsapp}">تواصل عبر واتساب</a></p>
+      <p>البريد الإلكتروني: <a href="mailto:${CONTACT.email}">${CONTACT.email}</a></p>
     `,
   },
   en: {
@@ -42,6 +43,7 @@ const content = {
       <h3>Contact Us</h3>
       <p>Phone: <a href="tel:${CONTACT.phone}">${CONTACT.phone}</a></p>
       <p>WhatsApp: <a href="https://wa.me/${CONTACT.whatsapp}">Contact via WhatsApp</a></p>
+      <p>Email: <a href="mailto:${CONTACT.email}">${CONTACT.email}</a></p>
     `,
   },
 };

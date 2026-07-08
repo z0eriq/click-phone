@@ -48,11 +48,11 @@ export function getAverageRating(ratings: number[]): number {
 
 export const CONTACT = {
   phone: process.env.NEXT_PUBLIC_PHONE || "0785954444",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "964785954444",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "962785954444",
   facebook: process.env.NEXT_PUBLIC_FACEBOOK || "https://web.facebook.com/profile.php?id=61567285796866",
   maps: process.env.NEXT_PUBLIC_MAPS_URL || "https://maps.app.goo.gl/7W7ncszchVNWCJhE7",
-  email: "info@clickphone.iq",
-  address: "العراق",
+  email: process.env.NEXT_PUBLIC_EMAIL || "click@aloush.online",
+  address: "إربد، الأردن",
 };
 
 export const TAX_RATE = parseFloat(process.env.TAX_RATE || "0.05");
