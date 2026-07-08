@@ -6,7 +6,7 @@
 
 - **Frontend:** Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion
 - **Backend:** Next.js API Routes
-- **Database:** MySQL + Prisma ORM
+- **Database:** PostgreSQL (Neon) + Prisma ORM
 - **Auth:** JWT Authentication
 - **State:** Zustand
 - **Charts:** Recharts
@@ -42,7 +42,7 @@
 
 ### المتطلبات
 - Node.js 18+
-- MySQL 8+
+- PostgreSQL 14+ (Neon recommended for Vercel)
 
 ### الخطوات
 
@@ -121,7 +121,7 @@ npm start
 ### متغيرات البيئة للإنتاج
 
 ```env
-DATABASE_URL=mysql://user:pass@host:3306/click_phone
+DATABASE_URL=postgresql://user:pass@host/click_phone?sslmode=require
 JWT_SECRET=your-super-secret-key
 NEXT_PUBLIC_APP_URL=https://yourdomain.com
 ```
