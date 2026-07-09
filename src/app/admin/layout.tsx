@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { AdminGuard } from "@/components/admin/admin-guard";
 
 const sidebarLinks = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard", labelAr: "لوحة التحكم" },
@@ -47,6 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
+    <AdminGuard>
     <div className="flex min-h-screen bg-gray-100 dark:bg-gray-950">
       {/* Sidebar */}
       <aside
@@ -136,5 +138,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <main className="flex-1 overflow-auto p-6">{children}</main>
       </div>
     </div>
+    </AdminGuard>
   );
 }

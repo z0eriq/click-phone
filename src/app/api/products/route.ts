@@ -26,9 +26,9 @@ export async function GET(request: NextRequest) {
         where: {
           isActive: true,
           OR: [
-            { name: { contains: q } },
-            { nameAr: { contains: q } },
-            { sku: { contains: q } },
+            { name: { contains: q, mode: "insensitive" } },
+            { nameAr: { contains: q, mode: "insensitive" } },
+            { sku: { contains: q, mode: "insensitive" } },
           ],
         },
         include: {

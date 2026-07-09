@@ -1,37 +1,44 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, Search, Download, Upload } from "lucide-react";
+import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { ProductFormModal } from "@/components/admin/product-form-modal";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface Product {
   id: string;
   name: string;
+  nameAr?: string | null;
   sku: string;
   price: number;
   stock: number;
   isActive: boolean;
+  slug: string;
   brand?: { name: string };
-  category?: { name: string };
+  category?: { name: string; nameAr?: string | null };
+  images?: { url: string }[];
 }
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
 
   const fetchProducts = async () => {
+    setLoading(true);
     try {
-      const res = await fetch("/api/products?limit=100");
+      const res = await fetch("/api/admin/products?limit=100");
       const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "فشل تحميل المنتجات");
+        return;
+      }
       setProducts(data.products || []);
     } catch {
       toast.error("فشل تحميل المنتجات");
@@ -40,9 +47,40 @@ export default function AdminProductsPage() {
     }
   };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`هل تريد حذف "${name}"؟`)) return;
+    try {
+      const res = await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json();
+        toast.error(data.error || "فشل الحذف");
+        return;
+      }
+      toast.success("تم حذف المنتج");
+      fetchProducts();
+    } catch {
+      toast.error("حدث خطأ");
+    }
+  };
+
+  const openAdd = () => {
+    setEditId(null);
+    setModalOpen(true);
+  };
+
+  const openEdit = (id: string) => {
+    setEditId(id);
+    setModalOpen(true);
+  };
+
   const filtered = products.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
+      (p.nameAr || "").includes(search) ||
       p.sku.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -53,20 +91,10 @@ export default function AdminProductsPage() {
           <h2 className="text-2xl font-bold">إدارة المنتجات</h2>
           <p className="text-gray-500">{products.length} منتج</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="gap-2">
-            <Upload className="h-4 w-4" />
-            استيراد Excel
-          </Button>
-          <Button variant="outline" size="sm" className="gap-2">
-            <Download className="h-4 w-4" />
-            تصدير Excel
-          </Button>
-          <Button size="sm" className="gap-2">
-            <Plus className="h-4 w-4" />
-            إضافة منتج
-          </Button>
-        </div>
+        <Button size="sm" className="gap-2" onClick={openAdd}>
+          <Plus className="h-4 w-4" />
+          إضافة منتج
+        </Button>
       </div>
 
       <div className="relative max-w-md">
@@ -102,19 +130,32 @@ export default function AdminProductsPage() {
                   </tr>
                 ) : filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-gray-500">
-                      لا توجد منتجات
+                    <td colSpan={6} className="p-8 text-center">
+                      <p className="text-gray-500 mb-4">لا توجد منتجات</p>
+                      <Button size="sm" onClick={openAdd}>
+                        <Plus className="h-4 w-4 me-2" />
+                        أضف أول منتج
+                      </Button>
                     </td>
                   </tr>
                 ) : (
                   filtered.map((product) => (
                     <tr key={product.id} className="border-b dark:border-gray-800">
                       <td className="p-4">
-                        <div>
-                          <p className="font-medium">{product.name}</p>
-                          <p className="text-xs text-gray-500">
-                            {product.brand?.name} • {product.category?.name}
-                          </p>
+                        <div className="flex items-center gap-3">
+                          {product.images?.[0]?.url && (
+                            <img
+                              src={product.images[0].url}
+                              alt=""
+                              className="h-10 w-10 rounded-lg object-cover"
+                            />
+                          )}
+                          <div>
+                            <p className="font-medium">{product.nameAr || product.name}</p>
+                            <p className="text-xs text-gray-500">
+                              {product.brand?.name} • {product.category?.nameAr || product.category?.name}
+                            </p>
+                          </div>
                         </div>
                       </td>
                       <td className="p-4 font-mono text-xs">{product.sku}</td>
@@ -137,10 +178,15 @@ export default function AdminProductsPage() {
                       </td>
                       <td className="p-4">
                         <div className="flex gap-1">
-                          <Button variant="ghost" size="icon">
+                          <Button variant="ghost" size="icon" onClick={() => openEdit(product.id)}>
                             <Pencil className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="text-red-500">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500"
+                            onClick={() => handleDelete(product.id, product.nameAr || product.name)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
@@ -153,6 +199,13 @@ export default function AdminProductsPage() {
           </div>
         </CardContent>
       </Card>
+
+      <ProductFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSuccess={fetchProducts}
+        productId={editId}
+      />
     </div>
   );
 }
