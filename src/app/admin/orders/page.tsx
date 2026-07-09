@@ -103,7 +103,7 @@ export default function AdminOrdersPage() {
                       {order.shippingName} • {order.shippingPhone}
                     </p>
                     <p className="text-xs text-gray-400">
-                      {new Date(order.createdAt).toLocaleString("ar-IQ")}
+                      {new Date(order.createdAt).toLocaleString("ar-JO")}
                     </p>
                   </div>
                   <div className="text-end">

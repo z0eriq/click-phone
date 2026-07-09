@@ -59,7 +59,7 @@ export default async function BlogPage() {
                   </p>
                   {post.publishedAt && (
                     <time className="mt-3 block text-xs text-gray-400">
-                      {new Date(post.publishedAt).toLocaleDateString("ar-IQ")}
+                      {new Date(post.publishedAt).toLocaleDateString("ar-JO")}
                     </time>
                   )}
                 </div>

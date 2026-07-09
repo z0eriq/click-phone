@@ -7,7 +7,7 @@ import { useCartStore, useLocaleStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatPrice, TAX_RATE, SHIPPING_COST, FREE_SHIPPING_THRESHOLD } from "@/lib/utils";
+import { formatPrice, TAX_RATE, SHIPPING_COST, FREE_SHIPPING_THRESHOLD, LOCALE_AR, LOCALE_EN } from "@/lib/utils";
 import { t, getLocalizedField } from "@/lib/i18n";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -92,7 +92,7 @@ export default function CartPage() {
                         <p className="text-xs text-gray-500">{item.color}</p>
                       )}
                       <p className="mt-1 font-bold text-brand-600">
-                        {formatPrice(item.price, locale === "ar" ? "ar-IQ" : "en-US")}
+                        {formatPrice(item.price, locale === "ar" ? LOCALE_AR : LOCALE_EN)}
                       </p>
                     </div>
                     <button

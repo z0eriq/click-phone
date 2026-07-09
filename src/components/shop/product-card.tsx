@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, formatPrice, calculateDiscount } from "@/lib/utils";
+import { cn, formatPrice, calculateDiscount, LOCALE_AR, LOCALE_EN } from "@/lib/utils";
 import { getLocalizedField, t, type Locale } from "@/lib/i18n";
 import { useLocaleStore, useCartStore, useWishlistStore } from "@/store";
 import { Button } from "@/components/ui/button";
@@ -151,11 +151,11 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
             <div className="mb-3 flex items-baseline gap-2">
               <span className="text-lg font-bold text-gray-900 dark:text-white">
-                {formatPrice(price, locale === "ar" ? "ar-IQ" : "en-US")}
+                {formatPrice(price, locale === "ar" ? LOCALE_AR : LOCALE_EN)}
               </span>
               {comparePrice && comparePrice > price && (
                 <span className="text-sm text-gray-400 line-through">
-                  {formatPrice(comparePrice, locale === "ar" ? "ar-IQ" : "en-US")}
+                  {formatPrice(comparePrice, locale === "ar" ? LOCALE_AR : LOCALE_EN)}
                 </span>
               )}
             </div>

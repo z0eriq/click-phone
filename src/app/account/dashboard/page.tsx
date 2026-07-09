@@ -119,7 +119,7 @@ export default function AccountDashboard() {
                   <div>
                     <p className="font-mono text-sm font-medium">{order.orderNumber}</p>
                     <p className="text-xs text-gray-500">
-                      {new Date(order.createdAt).toLocaleDateString(locale === "ar" ? "ar-IQ" : "en-US")}
+                      {new Date(order.createdAt).toLocaleDateString(locale === "ar" ? "ar-JO" : "en-JO")}
                     </p>
                   </div>
                   <div className="text-end">

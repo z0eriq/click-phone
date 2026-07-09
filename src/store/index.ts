@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Locale } from "@/lib/i18n";
+import { TAX_RATE, SHIPPING_COST, FREE_SHIPPING_THRESHOLD } from "@/lib/utils";
 
 export interface CartItem {
   id: string;
@@ -83,10 +84,11 @@ export const useCartStore = create<CartStore>()(
       getTotal: () => {
         const subtotal = get().getSubtotal();
         const discount = get().couponDiscount;
-        const tax = (subtotal - discount) * 0.05;
+        const afterDiscount = subtotal - discount;
+        const tax = afterDiscount * TAX_RATE;
         const shipping =
-          subtotal - discount >= 100000 ? 0 : 5000;
-        return subtotal - discount + tax + shipping;
+          afterDiscount >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+        return afterDiscount + tax + shipping;
       },
 
       getItemCount: () =>
