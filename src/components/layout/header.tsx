@@ -14,6 +14,7 @@ import {
   Sun,
   Moon,
   Globe,
+  MessageCircle,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCartStore, useLocaleStore, useWishlistStore } from "@/store";
@@ -22,17 +23,22 @@ import { cn, CONTACT } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
+const mainNavLinks = [
   { href: "/", key: "home" as const },
   { href: "/about", key: "about" as const },
   { href: "/shop", key: "shop" as const },
   { href: "/offers", key: "offers" as const },
   { href: "/latest-phones", key: "latestPhones" as const },
   { href: "/accessories", key: "accessories" as const },
+  { href: "/contact", key: "contactLines" as const },
+];
+
+const moreNavLinks = [
   { href: "/maintenance", key: "maintenance" as const },
   { href: "/blog", key: "blog" as const },
-  { href: "/contact", key: "contact" as const },
 ];
+
+const navLinks = [...mainNavLinks, ...moreNavLinks];
 
 export function Header() {
   const pathname = usePathname();
@@ -54,13 +60,29 @@ export function Header() {
 
   return (
     <>
-      {/* Top bar */}
+      {/* Top bar — خطوط الاتصال */}
       <div className="hidden bg-gray-900 text-white lg:block">
         <div className="container mx-auto flex items-center justify-between px-4 py-2 text-xs">
           <div className="flex items-center gap-4">
-            <a href={`tel:${CONTACT.phone}`} className="flex items-center gap-1 hover:text-brand-400">
+            <span className="font-semibold text-brand-400">
+              {t(locale, "contactLines")}:
+            </span>
+            <a
+              href={`tel:${CONTACT.phone}`}
+              className="flex items-center gap-1 hover:text-brand-400"
+            >
               <Phone className="h-3 w-3" />
               {CONTACT.phone}
+            </a>
+            <span className="text-gray-600">|</span>
+            <a
+              href={CONTACT.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 hover:text-brand-400"
+            >
+              <MessageCircle className="h-3 w-3" />
+              {t(locale, "whatsapp")}
             </a>
             <span className="text-gray-600">|</span>
             <span>{t(locale, "freeShipping")}</span>
@@ -112,13 +134,13 @@ export function Header() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden items-center gap-1 lg:flex">
-              {navLinks.slice(0, 6).map((link) => (
+            <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 px-2 lg:flex xl:gap-1">
+              {mainNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    "whitespace-nowrap rounded-lg px-2 py-2 text-[13px] font-medium transition-colors xl:px-3 xl:text-sm",
                     pathname === link.href
                       ? "bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-400"
                       : "text-gray-600 hover:text-brand-600 dark:text-gray-400"
@@ -219,6 +241,27 @@ export function Header() {
                     {t(locale, link.key)}
                   </Link>
                 ))}
+                <div className="mt-3 space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
+                  <p className="px-4 text-xs font-semibold text-brand-600">
+                    {t(locale, "contactLines")}
+                  </p>
+                  <a
+                    href={`tel:${CONTACT.phone}`}
+                    className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+                  >
+                    <Phone className="h-4 w-4 text-brand-600" />
+                    {CONTACT.phone}
+                  </a>
+                  <a
+                    href={CONTACT.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+                  >
+                    <MessageCircle className="h-4 w-4 text-brand-600" />
+                    {t(locale, "whatsapp")}
+                  </a>
+                </div>
               </nav>
             </motion.div>
           )}

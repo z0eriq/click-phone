@@ -16,6 +16,7 @@ export const translations = {
     blog: "المدونة",
     faq: "الأسئلة الشائعة",
     contact: "اتصل بنا",
+    contactLines: "خطوط الاتصال",
     privacy: "سياسة الخصوصية",
     terms: "الشروط والأحكام",
 
@@ -102,6 +103,7 @@ export const translations = {
     blog: "Blog",
     faq: "FAQ",
     contact: "Contact Us",
+    contactLines: "Contact Lines",
     privacy: "Privacy Policy",
     terms: "Terms & Conditions",
 
