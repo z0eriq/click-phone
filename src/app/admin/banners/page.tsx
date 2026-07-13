@@ -241,16 +241,42 @@ export default function AdminBannersPage() {
                 value={form.subtitleAr}
                 onChange={(e) => setForm({ ...form, subtitleAr: e.target.value })}
               />
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 space-y-3">
+                <label className="mb-1.5 block text-sm font-medium">صورة البنر *</label>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="block w-full text-sm file:me-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-brand-700 hover:file:bg-brand-100"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const body = new FormData();
+                    body.append("file", file);
+                    try {
+                      const res = await fetch("/api/admin/upload", { method: "POST", body });
+                      const data = await res.json();
+                      if (!res.ok) {
+                        toast.error(data.error || "فشل رفع الصورة");
+                        return;
+                      }
+                      setForm((prev) => ({ ...prev, image: data.url }));
+                      toast.success("تم رفع الصورة");
+                    } catch {
+                      toast.error("فشل رفع الصورة");
+                    } finally {
+                      e.target.value = "";
+                    }
+                  }}
+                />
                 <Input
-                  label="رابط الصورة *"
+                  label="أو رابط الصورة"
                   value={form.image}
                   onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  placeholder="https://..."
+                  placeholder="https://... أو ارفع من الجهاز أعلاه"
                   required
                 />
                 {form.image && (
-                  <div className="relative mt-3 h-32 w-full overflow-hidden rounded-xl border dark:border-gray-700">
+                  <div className="relative mt-1 h-32 w-full overflow-hidden rounded-xl border dark:border-gray-700">
                     <Image
                       src={form.image}
                       alt="معاينة"

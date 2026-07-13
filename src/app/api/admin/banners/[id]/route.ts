@@ -9,7 +9,7 @@ const updateSchema = z.object({
   titleAr: z.string().optional().nullable(),
   subtitle: z.string().optional().nullable(),
   subtitleAr: z.string().optional().nullable(),
-  image: z.string().url().optional(),
+  image: z.string().min(1).optional(),
   link: z.string().optional().nullable(),
   position: z.string().optional(),
   isActive: z.boolean().optional(),

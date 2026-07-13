@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -74,6 +75,8 @@ export function ProductFormModal({
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isEdit = !!productId;
 
@@ -122,10 +125,45 @@ export function ProductFormModal({
     }
   }, [open, productId]);
 
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "فشل رفع الصورة");
+        return;
+      }
+      setForm((prev) => ({ ...prev, imageUrl: data.url }));
+      toast.success("تم رفع الصورة");
+    } catch {
+      toast.error("فشل رفع الصورة");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("اختر ملف صورة فقط");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+      return;
+    }
+    uploadImage(file);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.sku || !form.price) {
-      toast.error("يرجى ملء الحقول المطلوبة");
+      toast.error("الاسم وSKU والسعر مطلوبة");
       return;
     }
 
@@ -138,7 +176,7 @@ export function ProductFormModal({
         barcode: form.barcode || undefined,
         price: parseFloat(form.price),
         comparePrice: form.comparePrice ? parseFloat(form.comparePrice) : null,
-        stock: parseInt(form.stock) || 0,
+        stock: parseInt(form.stock, 10) || 0,
         brandId: form.brandId || null,
         categoryId: form.categoryId || null,
         imageUrl: form.imageUrl || undefined,
@@ -150,22 +188,20 @@ export function ProductFormModal({
         isOnSale: form.isOnSale,
       };
 
-      const url = isEdit ? `/api/admin/products/${productId}` : "/api/admin/products";
-      const method = isEdit ? "PATCH" : "POST";
-
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
+      const res = await fetch(
+        isEdit ? `/api/admin/products/${productId}` : "/api/admin/products",
+        {
+          method: isEdit ? "PATCH" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         toast.error(data.error || "فشل الحفظ");
         return;
       }
-
-      toast.success(isEdit ? "تم تحديث المنتج" : "تم إضافة المنتج بنجاح");
+      toast.success(isEdit ? "تم تحديث المنتج" : "تم إضافة المنتج");
       onSuccess();
       onClose();
     } catch {
@@ -178,31 +214,36 @@ export function ProductFormModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 dark:bg-gray-900">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold">
-            {isEdit ? "تعديل منتج" : "إضافة منتج جديد"}
-          </h2>
-          <button onClick={onClose} className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <h3 className="text-xl font-bold">
+            {isEdit ? "تعديل المنتج" : "إضافة منتج"}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-gray-500">جاري التحميل...</div>
+          <div className="flex justify-center py-12">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-600 border-t-transparent" />
+          </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <Input
-                label="اسم المنتج (إنجليزي) *"
+                label="الاسم (إنجليزي) *"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
               />
               <Input
-                label="اسم المنتج (عربي)"
+                label="الاسم (عربي)"
                 value={form.nameAr}
                 onChange={(e) => setForm({ ...form, nameAr: e.target.value })}
               />
@@ -216,7 +257,7 @@ export function ProductFormModal({
                 required
               />
               <Input
-                label="Barcode"
+                label="الباركود"
                 value={form.barcode}
                 onChange={(e) => setForm({ ...form, barcode: e.target.value })}
               />
@@ -224,29 +265,25 @@ export function ProductFormModal({
 
             <div className="grid gap-4 sm:grid-cols-3">
               <Input
-                label="السعر (د.أ) *"
+                label="السعر *"
                 type="number"
                 step="0.01"
-                min="0"
                 value={form.price}
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
                 required
               />
               <Input
-                label="السعر القديم (د.أ)"
+                label="السعر قبل الخصم"
                 type="number"
                 step="0.01"
-                min="0"
                 value={form.comparePrice}
                 onChange={(e) => setForm({ ...form, comparePrice: e.target.value })}
               />
               <Input
-                label="المخزون *"
+                label="المخزون"
                 type="number"
-                min="0"
                 value={form.stock}
                 onChange={(e) => setForm({ ...form, stock: e.target.value })}
-                required
               />
             </div>
 
@@ -260,7 +297,9 @@ export function ProductFormModal({
                 >
                   <option value="">-- اختر الشركة --</option>
                   {brands.map((b) => (
-                    <option key={b.id} value={b.id}>{b.name}</option>
+                    <option key={b.id} value={b.id}>
+                      {b.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -273,18 +312,60 @@ export function ProductFormModal({
                 >
                   <option value="">-- اختر التصنيف --</option>
                   {categories.map((c) => (
-                    <option key={c.id} value={c.id}>{c.nameAr || c.name}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.nameAr || c.name}
+                    </option>
                   ))}
                 </select>
               </div>
             </div>
 
-            <Input
-              label="رابط الصورة"
-              placeholder="https://example.com/image.jpg"
-              value={form.imageUrl}
-              onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-            />
+            <div>
+              <label className="mb-1.5 block text-sm font-medium">صورة المنتج</label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2"
+                  disabled={uploading}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="h-4 w-4" />
+                  {uploading ? "جاري الرفع..." : "اختر صورة من الجهاز"}
+                </Button>
+                {form.imageUrl ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="text-red-600"
+                    onClick={() => setForm({ ...form, imageUrl: "" })}
+                  >
+                    إزالة الصورة
+                  </Button>
+                ) : null}
+              </div>
+              <p className="mt-1.5 text-xs text-gray-500">
+                JPG أو PNG أو WEBP — حد أقصى 5 ميجابايت
+              </p>
+              {form.imageUrl ? (
+                <div className="relative mt-3 h-40 w-40 overflow-hidden rounded-xl border dark:border-gray-700">
+                  <Image
+                    src={form.imageUrl}
+                    alt="معاينة المنتج"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+              ) : null}
+            </div>
 
             <div>
               <label className="mb-1.5 block text-sm font-medium">الوصف (عربي)</label>
@@ -316,7 +397,7 @@ export function ProductFormModal({
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button type="submit" disabled={saving} className="flex-1">
+              <Button type="submit" disabled={saving || uploading} className="flex-1">
                 {saving ? "جاري الحفظ..." : isEdit ? "حفظ التعديلات" : "إضافة المنتج"}
               </Button>
               <Button type="button" variant="outline" onClick={onClose}>

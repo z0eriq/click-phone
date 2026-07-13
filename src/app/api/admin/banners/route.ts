@@ -9,7 +9,7 @@ const bannerSchema = z.object({
   titleAr: z.string().optional().nullable(),
   subtitle: z.string().optional().nullable(),
   subtitleAr: z.string().optional().nullable(),
-  image: z.string().url(),
+  image: z.string().min(1),
   link: z.string().optional().nullable(),
   position: z.string().default("home"),
   isActive: z.boolean().default(true),
