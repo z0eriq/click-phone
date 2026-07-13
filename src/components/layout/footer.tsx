@@ -13,11 +13,12 @@ const footerLinks = {
     { href: "/offers", key: "offers" as const },
     { href: "/latest-phones", key: "latestPhones" as const },
     { href: "/accessories", key: "accessories" as const },
+    { href: "/contact", key: "contactLines" as const },
   ],
   support: [
     { href: "/maintenance", key: "maintenance" as const },
     { href: "/faq", key: "faq" as const },
-    { href: "/contact", key: "contact" as const },
+    { href: "/support", key: "contact" as const },
     { href: "/blog", key: "blog" as const },
   ],
   legal: [

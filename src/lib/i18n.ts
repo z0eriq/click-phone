@@ -17,6 +17,10 @@ export const translations = {
     faq: "الأسئلة الشائعة",
     contact: "اتصل بنا",
     contactLines: "خطوط الاتصال",
+    contactLinesSubtitle: "شرائح وأرقام مميزة للبيع — زين، أورانج، أمنية",
+    offersOnly: "العروض فقط",
+    orderWhatsapp: "اطلب عبر واتساب",
+    noPhoneLines: "لا توجد خطوط متاحة حالياً",
     privacy: "سياسة الخصوصية",
     terms: "الشروط والأحكام",
 
@@ -104,6 +108,10 @@ export const translations = {
     faq: "FAQ",
     contact: "Contact Us",
     contactLines: "Contact Lines",
+    contactLinesSubtitle: "SIM cards and premium numbers for sale — Zain, Orange, Umniah",
+    offersOnly: "Offers only",
+    orderWhatsapp: "Order via WhatsApp",
+    noPhoneLines: "No lines available right now",
     privacy: "Privacy Policy",
     terms: "Terms & Conditions",
 

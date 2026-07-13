@@ -60,13 +60,10 @@ export function Header() {
 
   return (
     <>
-      {/* Top bar — خطوط الاتصال */}
+      {/* Top bar — store contact */}
       <div className="hidden bg-gray-900 text-white lg:block">
         <div className="container mx-auto flex items-center justify-between px-4 py-2 text-xs">
           <div className="flex items-center gap-4">
-            <span className="font-semibold text-brand-400">
-              {t(locale, "contactLines")}:
-            </span>
             <a
               href={`tel:${CONTACT.phone}`}
               className="flex items-center gap-1 hover:text-brand-400"
@@ -242,9 +239,6 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="mt-3 space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
-                  <p className="px-4 text-xs font-semibold text-brand-600">
-                    {t(locale, "contactLines")}
-                  </p>
                   <a
                     href={`tel:${CONTACT.phone}`}
                     className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"

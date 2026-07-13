@@ -169,6 +169,73 @@ async function main() {
     skipDuplicates: true,
   });
 
+  // Phone lines (SIM / contact numbers for sale)
+  await prisma.phoneLine.createMany({
+    data: [
+      {
+        number: "0790001122",
+        operator: "zain",
+        price: 45,
+        comparePrice: 60,
+        title: "Zain Premium",
+        titleAr: "رقم زين مميز",
+        descriptionAr: "رقم سهل الحفظ — عرض خاص",
+        isFeatured: true,
+        isOnSale: true,
+        sortOrder: 1,
+      },
+      {
+        number: "0775558899",
+        operator: "orange",
+        price: 35,
+        comparePrice: 50,
+        title: "Orange Special",
+        titleAr: "رقم أورانج خاص",
+        isOnSale: true,
+        sortOrder: 2,
+      },
+      {
+        number: "0781234567",
+        operator: "umniah",
+        price: 25,
+        title: "Umniah Line",
+        titleAr: "خط أمنية",
+        sortOrder: 3,
+      },
+      {
+        number: "0798887777",
+        operator: "zain",
+        price: 120,
+        comparePrice: 150,
+        title: "VIP Zain",
+        titleAr: "رقم زين VIP",
+        descriptionAr: "تكرار مميز — كمية محدودة",
+        isFeatured: true,
+        isOnSale: true,
+        sortOrder: 4,
+      },
+      {
+        number: "0771112233",
+        operator: "orange",
+        price: 40,
+        title: "Orange Line",
+        titleAr: "خط أورانج",
+        sortOrder: 5,
+      },
+      {
+        number: "0789990001",
+        operator: "umniah",
+        price: 55,
+        comparePrice: 70,
+        title: "Umniah Offer",
+        titleAr: "عرض أمنية",
+        isOnSale: true,
+        sortOrder: 6,
+      },
+    ],
+    skipDuplicates: true,
+  });
+
   // Coupons
   await prisma.coupon.upsert({
     where: { code: "CLICK10" },
