@@ -21,6 +21,7 @@ import { useCartStore, useLocaleStore, useWishlistStore } from "@/store";
 import { t } from "@/lib/i18n";
 import { cn, CONTACT } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { motion, AnimatePresence } from "framer-motion";
 
 const mainNavLinks = [
@@ -116,18 +117,8 @@ export function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-lg font-black text-white">
-                CP
-              </div>
-              <div className="hidden sm:block">
-                <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white">
-                  CLICK PHONE
-                </span>
-                <span className="block text-[10px] font-medium text-brand-600">
-                  {locale === "ar" ? "كليك فون" : "Smart Electronics"}
-                </span>
-              </div>
+            <Link href="/" className="flex shrink-0 items-center" aria-label="CLICK PHONE">
+              <BrandLogo height={44} priority />
             </Link>
 
             {/* Desktop Nav */}

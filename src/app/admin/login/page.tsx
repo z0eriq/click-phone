@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { toast } from "sonner";
 
 export default function AdminLoginPage() {
@@ -44,10 +45,10 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-950 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600 text-xl font-black text-white">
-            CP
+          <div className="mx-auto mb-4 flex justify-center">
+            <BrandLogo height={56} className="rounded-2xl" />
           </div>
-          <CardTitle className="text-2xl">CLICK PHONE Admin</CardTitle>
+          <CardTitle className="text-2xl">لوحة التحكم</CardTitle>
           <p className="text-sm text-gray-500">تسجيل الدخول إلى لوحة التحكم</p>
         </CardHeader>
         <CardContent>

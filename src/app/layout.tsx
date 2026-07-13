@@ -37,6 +37,11 @@ export const metadata: Metadata = {
     "صيانة هواتف",
   ],
   authors: [{ name: "CLICK PHONE" }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     type: "website",
     locale: "ar_JO",
@@ -44,13 +49,13 @@ export const metadata: Metadata = {
     siteName: "CLICK PHONE",
     title: "CLICK PHONE | كليك فون",
     description: "وجهتك الأولى للهواتف الذكية والإلكترونيات في إربد، الأردن",
+    images: [{ url: "/logo.png", alt: "CLICK PHONE" }],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true },
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
 };
 
 export default function RootLayout({

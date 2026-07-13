@@ -5,6 +5,7 @@ import { Phone, MapPin, Facebook, MessageCircle, Mail } from "lucide-react";
 import { useLocaleStore } from "@/store";
 import { t } from "@/lib/i18n";
 import { CONTACT } from "@/lib/utils";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { usePathname } from "next/navigation";
 
 const footerLinks = {
@@ -79,16 +80,8 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-lg font-black text-white">
-                CP
-              </div>
-              <div>
-                <span className="text-lg font-black text-white">CLICK PHONE</span>
-                <span className="block text-xs text-brand-400">
-                  {locale === "ar" ? "كليك فون" : "Smart Electronics"}
-                </span>
-              </div>
+            <div className="mb-4">
+              <BrandLogo height={52} className="rounded-xl" />
             </div>
             <p className="mb-4 max-w-sm text-sm leading-relaxed text-gray-400">
               {t(locale, "footerDesc")}

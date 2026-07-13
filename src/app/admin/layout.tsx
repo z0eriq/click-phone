@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { AdminGuard } from "@/components/admin/admin-guard";
+import { BrandLogo } from "@/components/ui/brand-logo";
 
 const sidebarLinks = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard", labelAr: "لوحة التحكم" },
@@ -61,10 +62,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         <div className="flex h-16 items-center justify-between border-b border-gray-800 px-6">
           <Link href="/admin" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-black">
-              CP
-            </div>
-            <span className="font-bold">Admin Panel</span>
+            <BrandLogo height={32} className="rounded-md" />
           </Link>
           <button className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />
