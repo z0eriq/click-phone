@@ -111,6 +111,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               fill
               className="object-contain p-4 transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 768px) 50vw, 25vw"
+              unoptimized={image.startsWith("data:") || image.startsWith("/uploads/")}
             />
             <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/0 opacity-0 transition-all group-hover:bg-black/5 group-hover:opacity-100">
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg dark:bg-gray-800">

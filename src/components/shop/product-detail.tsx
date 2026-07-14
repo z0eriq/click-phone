@@ -130,6 +130,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               fill
               className="object-contain p-8"
               priority
+              unoptimized={(product.images[selectedImage]?.url || "").startsWith("data:")}
             />
           </div>
           {product.images.length > 1 && (
@@ -143,7 +144,13 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     selectedImage === i ? "border-brand-600" : "border-transparent"
                   )}
                 >
-                  <Image src={img.url} alt="" fill className="object-contain p-1" />
+                  <Image
+                    src={img.url}
+                    alt=""
+                    fill
+                    className="object-contain p-1"
+                    unoptimized={img.url.startsWith("data:")}
+                  />
                 </button>
               ))}
             </div>
